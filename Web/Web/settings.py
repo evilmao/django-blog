@@ -35,13 +35,17 @@ INSTALLED_APPS = [
     'Blog',
     'user',
     'todo',
-    'django.contrib.admin',
+    #'django.contrib.admin', 被xadmin替换
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
+    'xadmin',   # 加入xadmin管理app
+    'crispy_forms',
+    'reversion',
+
 ]
 
 MIDDLEWARE = [

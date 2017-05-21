@@ -14,14 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.contrib import admin
+from django.contrib import admin  
 
+import xadmin
+xadmin.autodiscover()
+
+# version模块自动注册需要版本控制的 Model
+from xadmin.plugins import xversion
+xversion.register_models()
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    #url(r'^admin/', admin.site.urls),
     #url(r'^user/', include('user.urls', namespace='user')),
     url(r'^accounts/', include('user.urls', namespace='user')),  
     url(r'', include('Blog.urls', namespace='Blog')), 
     url(r'^todos/', include('todo.urls')),  
+    url(r'^xadmin/', xadmin.site.urls),
+
 ]

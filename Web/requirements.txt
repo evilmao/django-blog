@@ -1,0 +1,7 @@
+markdown2==2.3.4
+six==1.10.0
+Whoosh==2.7.4
+httplib2==0.10.3
+Django==1.10.7
+Markdown==2.6.8
+jieba==0.38

@@ -103,6 +103,7 @@ def new_article(request):
             article = form.save(commit=False)
             article.author = request.user
             article.save()
+            form.save_m2m()
             #提交后建议跳转到文章详情(detail)页面
             return HttpResponseRedirect(reverse('Blog:index'))
           
