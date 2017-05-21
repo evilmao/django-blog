@@ -1,0 +1,58 @@
+ {% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/login.style.css' %}">
+    <style type="text/css">
+        body{
+            background: url({% static 'blog/images/bg_login.jpg'%})no-repeat fixed;
+            background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+            margin: 0;
+            padding: 0;
+}
+        }
+    </style>
+</head>
+<body>
+
+<div id="content">
+    <div class="login-header">
+        <img src="{% static 'blog/images/logo.png' %}">
+    </div>    
+    
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <form action="{% url 'user:login' %}" method="post" role="form">
+        {% csrf_token %}
+        <div class="login-input-box">
+            <span class="icon icon-user"></span>
+            <input type="text" placeholder="Please enter your email/phone" name="username">
+        </div>
+        <div class="login-input-box">
+            <span class="icon icon-password"></span>
+            <input type="password" placeholder="Please enter your password" name="password">
+        </div>
+    
+    <div class="remember-box">
+        <label>
+            <input type="checkbox">&nbsp;Remember Me
+        </label>
+    </div>
+    <div class="login-button-box">   
+        <button>Login</button></a>     
+    </div>
+    </form>
+    
+    <div class="logon-box">
+        <a href="">Forgot?</a>
+        <a href="">Register</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+
+{% block main %}
+    <!--把文章列表传给paginate函数，每页分3个-->
+    {% paginate article_list 3 %}
+
+	 {% for article in article_list %}
+        <article class="post post-1">
+            <header class="entry-header">
+                <h1 class="entry-title">
+                    <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                </h1>
+                <!--文章显示标签-->
+                <p style="font-size:16px;font-weight:bold" >
+                    {% if article.tags.all %} Tags: {% endif %}  <!--如果文章存在标签则显示标签提示-->
+                    {% for tag in article.tags.all %}           <!--循环一个帖子的所有标签-->
+                           <style >
+                            .abc{color: #00F;font-size:14px;font-weight:bold}  
+                           </style>
+                           <a class="abc" href="#">  <!--通过某一标签来显示一个自定义的链接URL,用URL的名称以及标签 slug作为参数来构建URL-->
+                             {{ tag.name }}   
+                           </a >
+                            {% if not forloop.last %}, {% endif %}  <!--使用forloop。last如果最后标签不存在，使用逗号结束-->
+                        
+                    {% endfor %}             
+                </p>
+                
+                <div class="entry-meta">
+                        <a >
+                            <time class="entry-date" datetime="{{ article.created }}">
+                                {{ article.created }}
+                            </time>
+                        </a>
+                    </span>
+                    <span class="article-author"><a >{{ article.author }} </a></span>
+                    <span class="comments-link">
+
+                    <a>评论({{ article.comments.count }})</a>
+                    </span>
+                </div>
+            </header>
+            <div class="entry-content clearfix">
+                <p>{{ article.body|custom_markdown|truncatewords_html:50 }}</p>
+                <div class="read-more cl-effect-14">
+                    <a href="{{ article.get_absolute_url }}" class="more-link">继续阅读 <span
+                            class="meta-nav">→</span></a>
+                </div>
+            </div>
+        </article>
+    {% empty %}
+        <div class="no-post">暂时还没有发布的文章！</div>
+    {% endfor %}
+<!--里用include ，把pagination的模板代码写在单独的pagination.html文件中，哪里需要用到哪里就 include 提高代码的复用性。-->
+{% include 'pagination.html' %}
+
+ {% endblock main %}}

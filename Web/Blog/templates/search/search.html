@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+{% load bootstrap3 %}
+
+<!--**********************03/05/2017搜索框基本已经可以工作************************************-->
+
+{% block main %}
+    <form role="search" method="get" id="searchform" action="#">
+         <!--<table>
+            {{ form.as_table }} 
+            <tr>
+                <td> </td>
+                <td>
+               <input type="submit" placeholder="Search" required>
+                <td/>
+            </tr>
+        </table>-->
+
+      {% if query and page.object_list  %} 
+
+          <div class="well fade in daytips">
+            <strong>关于
+              <font color="red"><b>"{{ page }}"</b></font>的搜索结果一共有
+              <font color="red"><b>"{{ result.count }}"</b></font>条
+            </strong>
+          </div>
+
+        {% for result in page.object_list %}
+          
+          <article class="article article-1">
+
+            <header class="entry-header">
+              <h1 class="entry-title">
+                  <a href="{{ result.object.get_absolute_url }}">{{  result.object.title }}</a>
+              </h1>
+              <div class="entry-meta">
+                  <span class="article-category">
+                    <a href="url 'Blog:category' category.pk">{{ result.object.categroy }} </a>
+                  </span>
+                  <span class="article-date">
+                      <a href="#">
+                        <time class="entry-date" datetime="{{ esult.object.created_time }}">
+                            {{ result.object.created  }}
+                        </time>
+                      </a>
+                  </span>
+                  <span class="article-author">
+                      <a href="#">{{ result.object.author }} </a>
+                  </span>
+                  <span class="comments-link">
+                     <a href="{{ article.get_absolute_url }}">评论({{ result.object.comments.count }})</a>
+                  </span>
+              </div>
+            </header>
+
+            <div class="entry-content clearfix">
+                <p>{{ result.object.body|custom_markdown|truncatewords_html:50 }}</p>
+                <div class="read-more cl-effect-14">
+                  <a href="{{ result.object.get_absolute_url }}" class="more-link">继续阅读 
+                    <span class="meta-nav">→</span>
+                  </a>
+                  <hr>
+                </div>
+            </div>                  
+          </article>
+        {% endfor %} 
+
+      {% if page.has_previous or page.has_next %}
+           <div>
+               {% if page.has_previous %}
+                 <a href="?q={{ query }}&page={{ page.previous_page_number }}">
+               {% endif %}
+               « Previous
+               {% if page.has_previous %}
+               </a>
+               {% endif %}
+               |
+               {% if page.has_next %}
+               <a href="?q={{ query }}&page={{ page.next_page_number }}">
+               {% endif %}Next »
+               {% if page.has_next %}
+               </a>
+               {% endif %}
+           </div>
+      {% endif %}
+
+      {% else %}
+           <div class="well fade in daytips">
+               <button type="button" class="close" data-dismiss="alert">×</button>
+               <strong>抱歉，并没有关于<font color="red"><b>"{{ text }}"</b></font>的内容,请换一个词试试
+               </strong>
+            </div> 
+      {% endif %}
+    </form>
+  
+{% endblock %}
